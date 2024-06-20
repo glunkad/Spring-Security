@@ -4,6 +4,7 @@ package com.example.Spring.Security.controller;
 import com.example.Spring.Security.dto.AuthResponseDto;
 import com.example.Spring.Security.dto.LoginDto;
 import com.example.Spring.Security.dto.RegisterDto;
+import com.example.Spring.Security.dto.UserDto;
 import com.example.Spring.Security.model.Role;
 import com.example.Spring.Security.model.UserEntity;
 import com.example.Spring.Security.repository.RoleRepository;
@@ -73,11 +74,12 @@ public class AuthController {
     }
 
     @GetMapping("/tokenGetUserDetails")
-    private ResponseEntity<UserDetails> getUserFromToken() {
+    private ResponseEntity<UserDto> getUserFromToken() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
-        String username = userDetails.getUsername();
-        return new ResponseEntity<>(userDetails, HttpStatus.OK);
+        UserDto userDto = new UserDto();
+        userDto.setUsername(userDetails.getUsername());
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
 
